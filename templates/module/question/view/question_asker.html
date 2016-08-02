@@ -1,0 +1,22 @@
+{% if question.id %}
+<div class='article_question' data-id='{{question.id}}' data-signature='{{question.signature}}'>
+	<span class='article_question_text' >
+	{%if question.question_type == 1 %}
+		{%for fragment in question.question %}
+		  	{% if fragment = None %}
+				<input type='text' class='answer-field'>
+			{%else%}
+				{{fragment}} 
+			{%endif%}
+		{%endfor%}
+	{%endif%}
+	{%if question.question_type == 2 %}
+	{{question.question}}
+	True<input type='radio' class='true_false_radio' name='true_false_radio' value='true' >
+	False<input type='radio' class='true_false_radio' name='true_false_radio' value='false'>
+	{%endif%}
+	</span>
+	<button class='next_question'>next question</button>
+	<span class='answer_indicator'></span>
+</div>
+{%endif%}

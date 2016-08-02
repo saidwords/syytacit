@@ -1,0 +1,39 @@
+{% extends "BaseLayoutView.html" %}
+{%block localjavascript %}
+<script type="text/javascript" src="/module/question/view/js/webservice.js"></script>
+<script type="text/javascript" src="/module/question/view/js/browse.js"></script>
+<script>
+$(document).ready(function(){ 
+qb = new QuestionBrowser();
+qb.init();
+});
+</script>
+{% endblock %}
+
+{% block contentzone %}
+<div id='message'></message>
+{% for question in model.questions %}
+ 
+   Q:<textarea class='question_textarea' data-key='{{question.key}}' cols="80">{{question.question}}</textarea><button class='delete_question' data-key='{{question.key}}'>delete</button><br>
+  A:<textarea data-key='{{question.key}}' class='correct_answer' cols=80 >{%if question.correct_answer %}{{question.correct_answer.answer}}{%endif%}</textarea><br>
+  created by {{question.username}}<br>
+  <input type="radio" name="question_status_{{question.key}}" value="0" data-key='{{question.key}}' class='question_status' {%if question.status = 0 %}checked{%endif%} >unprocessed 
+  <input type="radio" name="question_status_{{question.key}}" value="1" data-key='{{question.key}}' class='question_status' {%if question.status = 1 %}checked{%endif%}>unreviewed
+  <input type="radio" name="question_status_{{question.key}}" value="2" data-key='{{question.key}}' class='question_status' {%if question.status = 2 %}checked{%endif%}>accepted
+  <input type="radio" name="question_status_{{question.key}}" value="3" data-key='{{question.key}}' class='question_status' {%if question.status = 3 %}checked{%endif%}>rejected
+  
+ <br>
+  {%for cat in question.categories%}
+  	<input type='text' value='{{cat.name}}'> <button class='delete_tag' data-key='{{question.key}}' data-tag='{{cat.name}}'>delete</button><br>
+  {%endfor%}
+  <input type='text' id='new_tag-{{question.key}}'> <button class='add_tag' data-key='{{question.key}}'>add</button><br>
+{%for sentence in question.foosentences%}
+  	{{sentence.sentence}}<br>
+ {%endfor%}
+  
+  <hr>
+
+{%endfor%}
+
+<a href='/question/browse/{{model.category.name}}/{{model.prevpage}}/{{model.status}}'>prev</a> | <a href='/question/browse/{{model.category.name}}/{{model.nextpage}}/{{model.status}}'>next</a>
+{% endblock %}

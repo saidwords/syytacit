@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}Syytacit{% endblock %}</title>
+<link rel="stylesheet" href='/css/view.css' type="text/css" media="screen,projection" />
+<script type="text/javascript" src="/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="/js/jquery.callout.min.js"></script>
+<script type="text/javascript" src="/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/js/WebService.js"></script>
+<script type="text/javascript" src="/js/adorechestra.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	controller=new Adorechestra();
+	controller.init();
+	
+	$( "input[name='username3']").css("display","none");
+
+});
+</script>
+</head>
+<body>
+<div id="header">
+    <div id='header_left'>
+		<div id='title'>SYYTACIT</div>
+		<div id='description'>is in beta testing.</div>
+	</div>
+	<div id='header_right'>
+	
+		
+	</div>
+</div>
+<div id="page">
+    <div id="content" class="clearfix">
+        <div id="lcontent">
+        {%if model.email %}
+			<br><br>
+			Thank you for your interest! An email will be sent to {{model.email}} when we launch!
+			{%else%}
+			If you would like to register to be notified when we launch then please enter your email address below<br>
+			
+			<form action="/" method="POST">
+			<input type='text' placeholder="your name" name='username3'>
+			<input type=text name='email' placeholder="enter your email address">
+			<input type='submit' value="register">
+			
+			</form>
+			{%endif%}
+        </div>
+    </div>
+</div>
+        
+
+</body>
+</html>

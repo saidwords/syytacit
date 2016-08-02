@@ -1,0 +1,48 @@
+{% extends "BaseLayoutView.html" %}
+{%block localcss %}
+{%if model.section == 'comments' %}
+<link rel="stylesheet" href='/module/comments/view/css/comments.css' type="text/css" media="screen,projection" />
+{%endif%}
+<link rel="stylesheet" href='/module/article/view/css/article.css' type="text/css" media="screen,projection" />
+{% endblock %}
+
+{%block localjavascript %}
+<script type="text/javascript" src="/js/WebService.js"></script>
+<script type="text/javascript" src="/module/home/view/js/home.js"></script>
+<script type="text/javascript" src="/module/user/view/js/user.js"></script>
+
+{%if model.section == 'comments' %}
+<script type="text/javascript" src="/module/comments/view/js/comments.js"></script>
+{%endif%}
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	hc = new HomeController();
+	hc.init();
+	hc.data.user.username={% if model.user.username%}'{{model.user.username}}'{%else%}false{%endif%};
+	uc= new UserController();
+	uc.init();
+	
+});
+</script>
+{% endblock %}
+{%block sidebar%}
+<img src='/img/adwords.png'>				
+{%endblock%}
+{% block contentzone %}
+
+
+<h3>You have been a member for {{model.user_date_elapsed}} since {{model.user_date_established|date:"l  M j, Y h:i a"}}</h3>
+
+<div id='preferences'>
+Email: <input type='text' id='email' value='{{model.email_address}}'><button id='btn_change_email'>Change</button><br>
+Send me email alerts: When a comment is made on my article <input type='checkbox' id='email_article_alert'><br>
+Send me email alerts: When a user responds to my comments <input type='checkbox' id='email_comment_alert'><br>
+
+</div>
+{% endblock %}
+{%block rcontent %}
+{%include "ad.html" %}
+{%include "google_analytics.html" %}
+{%endblock%}

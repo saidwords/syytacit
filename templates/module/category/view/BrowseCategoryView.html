@@ -1,0 +1,23 @@
+{%extends "BaseLayoutView.html" %}
+{%block localjavascript %}
+<script type='text/javascript' src='/module/category/view/js/category.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var ccontroller=new Category();
+	ccontroller.data.page={{model.page}};
+	ccontroller.data.haswikiname={%if model.haswikiname%}true{%else%}false{%endif%};
+	ccontroller.init();
+});
+</script>
+{%endblock%}
+{%block contentzone %}
+show categories having no wikiname<input id='haswikiname' type='checkbox' name='haswikiname' {%if model.haswikiname%}checked{%endif%}>
+<br>
+<input type='text' value='OpenCalais'><input type='text' value='Wikipedia'><br>
+
+{%for c in model.categories %}
+<input id='catname-{{forloop.counter}}' type='text' value='{{c.name}}'> <input id='wikiname-{{forloop.counter}}' type='text' value='{%if c.wikiname%}{{c.wikiname}}{%endif%}'><br>
+{%endfor%}
+<br>
+<a id='prevlink' href='/category/browse/{{model.previouspage}}'>previous</a>...<a id='nextlink' href='/category/browse/{{model.nextpage}}'>next</a>
+{%endblock%}

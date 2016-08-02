@@ -1,0 +1,75 @@
+{% extends "BaseLayoutView.html" %}
+{%block localjavascript %}
+<script type="text/javascript" src="/module/question/view/js/question.js"></script>
+<script type="text/javascript" src="/module/question/view/js/webservice.js"></script>
+<script type="text/javascript" src="/module/home/view/js/home.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	hc = new HomeController();
+	hc.init();
+	hc.data.user.username={% if model.user.username%}'{{model.user.username}}'{%else%}false{%endif%};
+	qc = new QuestionController();
+	qc.data.user.username=hc.data.user.username;
+	qc.init();
+});
+</script>
+{% endblock %}
+{% block contentzone %}
+<div id="lcontent-items">
+{% if not model.articles %}
+Sorry, no articles found
+{%endif%}
+<ul>
+{%for article in model.sticky_articles %}
+<li>
+	<div class="bracket">
+		{%include "module/article/view/article_meta.html" %}
+		{%if model.user.isadmin %}
+			{%include "module/article/view/article_admin.html" %}
+		{%endif%}
+	</div>
+</li>
+{%endfor%}
+
+{%for article in model.articles %}
+<li>
+	<div class="bracket">
+	{% with article=article %}
+		{%include "module/article/view/article_meta.html" %}
+		{%if model.user.isadmin %}
+			{%include "module/article/view/article_admin.html" %}
+		{%endif%}
+	{% endwith %}
+	</div>
+</li>
+{%endfor%} 
+</ul>
+</div>
+
+{% if model.previouspage != 1  %}
+<a id='previous' href='{{model.previouspage}}'>previous</a>
+{%endif%}
+{%if model.nextpage %} 
+ <a id='next' href='{{model.nextpage}}'>next</a>
+{%endif%}
+<hr>
+{% include "footer.html" %}
+{% endblock %}
+{%block rcontent %}
+{% with userstats=model.leaderboard title="{Top Users}" %}
+	{%include "user_knowledge_stats.html" %}
+{% endwith %}
+{%if model.user.username %}
+	{% with userstats=model.greater_userstats title="{Users Ahead of You}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+	{% with userstats=model.userstats title="{Your Scores}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+	{% with userstats=model.lesser_userstats title="{Users Behind You}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+{%endif%}
+{%include "ad.html" %}
+{%include "google_analytics.html" %}
+{%endblock%}

@@ -1,0 +1,44 @@
+application: syytacit
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+default_expiration: "7d"
+
+libraries:
+- name: django
+  version: "1.3"
+- name: webapp2
+  version: latest
+
+builtins:
+- remote_api: on
+
+handlers:
+
+- url: /_ah/mapreduce(/.*)?
+  login: admin
+  script: mapreduce.main.APP
+  
+- url: /css
+  static_dir: common/view/css
+
+- url: /module/(.*)/view/(.*)
+  static_files: static/module/\1/view/\2
+  upload: static/module/(.*)/view/(.*)
+
+- url: /js
+  static_dir: common/view/js
+  
+- url: /img
+  static_dir: common/view/img
+  
+- url: /view
+  static_dir: common/view
+  
+- url: /(robots\.txt|humans\.txt|crossdomain\.xml|sitemap\.xml|favicon\.ico)
+  static_files: static/\1
+  upload: static/(robots\.txt|humans\.txt|crossdomain\.xml|sitemap.xml|favicon\.ico)
+
+- url: /.*
+  script: main.app

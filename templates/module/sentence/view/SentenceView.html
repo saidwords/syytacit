@@ -1,0 +1,60 @@
+{% extends "BaseLayoutView.html" %}
+{%block sidebar%}
+<img src='/img/adwords.png'>				
+{%endblock%}
+{% block contentzone %}
+<script type="text/javascript" src="/module/sentence/view/js/sentencecontroller.js"></script>
+{%if model.exception %}
+exception {{model.exception.message}}
+{%endif%}
+<div id='category'>
+<h3>Step 1: select a category</h3>
+<select id='tags'>
+  <option value="">All</option>
+  <option value="{{model.tag}}">{{model.tag}}</option>
+{% for tag in model.tags %}
+  <option value="{{tag.name}}">{{tag.name}}</option>
+{%endfor%}
+</select>
+</div>
+<br>
+<div id='step_2' style='display:none'>
+<h3>Step 2: Select one or more sentences that form a fact.</h3>
+<div id='sentences' class='panel' >
+
+{%if model.sentences %}
+	{% for sentence in model.sentences %}
+		<img id='reject-sentence-{{sentence.order}}' src='/img/delete.png'><span id='sentence-{{sentence.order}}'>{{sentence.sentence}}.</span><br>
+	{%endfor%}
+{%else%}
+	no sentences found.
+{%endif%}
+</div>
+<button id='btn_previous'>Previous</button> &nbsp;&nbsp;&nbsp;&nbsp;<button id='btn_next'>Next</button>
+<br><br>
+<div id='step_3' style='display:none' >
+<h3>Step 3: Rewrite the sentence/s in the form of a question</h3>
+	<div id='selected_sentences' class='panel'></div>
+	<h3>Existing questions for selected sentences:</h3>
+	<div id='existing_questions' class='panel'></div>
+	<div id='question_panel' class='panel' style='display:none;'>
+		<button id='btn_clear_question'>clear</button>
+		<button id='save_question'>Save Question</button>
+		<button id='delete_question'>Delete Question</button>
+		<textarea rows="5" cols="80" id='question'></textarea>
+	</div>
+</div>
+</div>
+<div id='step_4' style='display:none;'>
+	<h3>Step 4: Write the correct answer to the question</h3>
+		<h4>Create answers to this question</h4>
+		<input type="checkbox" id='iscorrect'>
+		<textarea rows="5" cols="80" id='answer'></textarea>
+		<button id='save_answer'>Save Answer</button>
+		<button id='reset_answer'>Reset Answer</button>
+		<div id='answers'></div>
+</div>
+<div id='step_5' style='display:none;'>
+<h3>Step 5 of 5: Write three or more incorrect answers to the question</h3>
+</div>
+{% endblock %}

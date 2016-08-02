@@ -1,0 +1,19 @@
+#article_form #url,
+#article_form #title,
+#article_form #description
+{
+	width: 80%;
+}
+#article-title,
+#article_href,
+#article-description
+{
+	visibility:hidden;
+}
+
+.foo {
+	background-color:#e6e6e6;
+	border: 1px solid;
+	margin: 2px 0px 6px; 
+	padding: 0px 3px 3px 3px;
+} 

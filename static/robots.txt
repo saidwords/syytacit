@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /js/
+Disallow: /admin/
+Disallow: /api/
+
+User-Agent: Googlebot
+Disallow: /user/register
+Disallow: /user/login
+
+Sitemap: http://www.syytacit.net/sitemap.xml

@@ -1,0 +1,92 @@
+{% block contentzone %}
+{%for message in model.messages%}
+{{message}}<BR>
+{%endfor%}
+<ul>
+
+<li>users
+	<ul>
+		<li><a href="/dev/delete_all_users">DELETE all users</a></li>
+	</ul>
+</li>
+<li>articles
+	<ul>
+		<li><a href="/dev/getlatestarticles">Get latest articles from external webservices</a></li>
+		<li><a href="/dev/calculate_article_sortkey">Calculate article sort key</a></li>
+		<li><a href="/dev/delete_all_article_categories">delete_all_article_categories</a></li>
+		<li><a href="/dev/attach_user_to_articles">attach_user_to_articles</a></li>
+		<li><a href="/dev/delete_all_articles">DELETE all articles</a></li>
+		<li><a href="/dev/reset_all_article_sortkey">reset all article sort keys to 0.0</a></li>
+	</ul>
+</li>
+<li>questions
+	<ul>
+		<li><a href="/dev/delete_all_questions">Delete all questions</a></li>
+		<li><a href="/dev/cleanup_questions">Cleanup Questions</a></li>
+		<li><a href="/dev/create_random_questions">Create Random Questions + sentences + answers</a></li>
+		<li><a href="/dev/set_question_cats">reset all the question categories</a></li>
+	</ul>
+</li>
+<li>sentences
+	<ul>
+		<li><a href="/dev/delete_all_sentences">DELETE all sentences</a></li>
+	</ul>
+</li>
+<li>user answers
+	<ul>	
+		<li><a href="/dev/create_random_user_answers">Create random user answers</a></li>
+		<li><a href="/dev/delete_all_user_answers">delete_all_user_answers</a></li>
+	</ul>
+</li>
+<li>answers
+	<ul>
+		<li><a href="/dev/create_random_answers">Create random answers</a></li>
+		<li><a href="/dev/delete_all_answers">delete all answers</a></li>
+		<li><a href="/dev/delete_orphaned_answers">delete orphaned answers</a></li>
+	</ul>
+</li>
+<li>user knowledge
+	<ul>
+		<li><a href="/dev/delete_all_userknowledge">delete_all_userknowledge</a></li>
+		<li><a href="/dev/calculate_user_knowledge">Calculate user knowledge</a></li>
+		<li><a href="/dev/apply_user_knowledge">Apply user knowledge to articles</a></li>
+		<li><a href="/dev/reset_user_knowledge">reset_user_knowledge</a></li>
+		<li><a href="/dev/delete_orphaned_userknowledge">delete_orphaned_userknowledge</a></li>
+	</ul>
+</li>
+<li>article approval
+	<ul>
+		<li><a href="/dev/create_random_article_approvals">Create random article approvals</a></li>
+		<li><a href="/dev/delete_all_article_approvals">Delete all article approvals</a></li>
+		<li><a href="/dev/delete_orphaned_article_approvals">delete_orphaned_article_approvals</a></li>
+		<li><a href="/dev/recount_all_article_approvals">recount_all_article_approvals</a></li>
+		
+	</ul>
+</li>
+<li>categories
+	<ul>
+		<li><a href="/dev/build_category_search_index">build_category_search_index</a></li>
+		<li><a href="/dev/delete_all_article_categories">delete_all_article_categories</a></li>
+		<li><a href="/dev/reset_all_article_cat_sortkey">reset all article category sort keys to 0.0</a></li>
+		<li><a href="/dev/find_missing_wiki_categories">find_missing_wiki_categories</a></li>
+		
+		
+	</ul>
+</li>
+<li>comments
+	<ul>
+		<li><a href="/dev/delete_all_comments">Delete  comments</a></li>
+		<li><a href="/dev/delete_all_comment_approvals">delete_all_comment_approvals</a></li>
+		<li><a href="/dev/create_random_article_comments">Create random article comments</a></li>
+		<li><a href="/dev/recount_all_article_comments">recount_all_article_comments</a></li>
+	</ul>
+</li>			
+
+<li><a href="/dev/calculate_article_cat_sortkey">Calculate article category sort key</a></li>
+
+
+<li><a href="/dev/get_random_question">get random question</a></li>
+</ul>
+
+
+{% endblock %}

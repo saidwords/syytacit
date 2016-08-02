@@ -1,0 +1,13 @@
+{% extends "BaseLayoutView.html" %}
+{%block sidebar%}
+<img src='/img/adwords.png'>				
+{%endblock%}
+{% block contentzone %}
+This is the opencalais view. Todays date is {{model.todaydate}}<br>
+html:
+
+{{model.message|escape}}
+{% for tag in model.tags %}
+{{tag.name}} : {{tag.score}}<br>
+{% endfor %}
+{% endblock %}

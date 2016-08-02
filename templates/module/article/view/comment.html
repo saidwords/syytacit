@@ -1,0 +1,21 @@
+<div>In response to: <a id="article_title" class="cta1" href="/article/detail/{{comment.article.ihref}}#comment={{comment.key}}">{{comment.article.title}}</a></div>
+<div class="comment" >
+	<div id="children" class="children">
+		<div class="comment-box">
+			{%if comment.parent_comment.parent_comment %}
+				{% with comment=comment.parent_comment %}
+					{%include "module/article/view/parent_comment.html" %}
+				{% endwith %}
+			{%endif%}
+			<div class="children">
+				<div class="comment-box">
+					<div itemprop='comment' class="comment" data-key="{{comment.key}}">{{comment.text}}
+						<div class="comment_meta">
+							&ndash;<a itemprop="creator" href="/user/home/{{comment.user.username}}">{{comment.user.username}}</a> on <span itemprop="commentTime" {{comment.updated|date:"Y-m-dTH:i"}}></span>{{comment.updated|date:"l  M j, Y h:i a"}}<a> ⋮ </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

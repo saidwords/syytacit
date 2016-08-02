@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}Syytacit {%if model.page_subtitle%} - {{model.page_subtitle}}{%endif%}{% endblock %}</title>
+<meta name="keywords" content="{% block meta-keywords %}
+{%if model.metakeywords %}{{model.metakeywords}}{%else%}merit based, news, articles{%endif%}
+{% endblock %}" />
+<meta name="description" content="{% block meta-description %}
+{%if model.metadescription%}{{model.metadescription}}{%else%}Merit based news and articles{%endif%}
+{% endblock %}"  />
+<meta property="og:site_name" content="syytacit" />
+<meta property="og:image" content="http://www.syytacit.net/img/logo.gif" />
+<meta property="og:type" content="{% block meta-og-type %}website{% endblock %}" />
+<meta property="og:url" content="www.syytacit.net"/>
+<meta name="google-site-verification" content="qJGxbCQOzQ_0cngfX6qmtU5R-uJrzikdYrRUKwjn_rs" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href='/css/view.css' type="text/css" media="screen,projection" />
+{%block localcss %}{% endblock %}
+{%block meta %}{%endblock%}
+{%if model.canonicalurl%}
+<link rel="canonical" href="{{model.canonicalurl}}" />
+{%endif%}
+{%block commonjavascript %}
+<script type="text/javascript" src="/js/jquery-1.7.min.js?v={{model.revision}}"></script>
+<script type="text/javascript" src="/js/jquery.callout.min.js?v={{model.revision}}"></script>
+<script type="text/javascript" src="/js/jquery.tmpl.min.js?v={{model.revision}}"></script>
+<script type="text/javascript" src="/js/WebService.js?v={{model.revision}}"></script>
+<script type="text/javascript" src="/js/adorechestra.js?v={{model.revision}}"></script>
+<script>
+$(document).ready(function(){
+	controller=new Adorechestra();
+	controller.init();
+});
+</script>
+{%endblock%}
+<script type="text/javascript">{%block javascript %}
+	var canonicalurl={% if model.canonicalurl %}"{{model.canonicalurl}}"{%else%}null{%endif%};
+	var exception={% if model.exception %}"{{model.exception}}"{%else%}null{%endif%};
+	var user={% if model.user.username %}"{{model.user.username}}"{%else%}null{%endif%};{% endblock %}
+	$(document).bind('LOGGEDIN', function(e,userObj) {	
+		user=userObj.username;
+	});
+</script>
+{%block localjavascript %}{% endblock %}
+</head>
+<body>
+<div id="header">
+    <div id='header_left'>
+		<span id='title'>SYYTACIT</span><span>(beta)</span>
+		<span id='description'>Merit based news and articles</span>
+	</div>
+	<div id='header_right'>
+		{%include "user.html" %}
+    	{%include "navigation.html" %}
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div id="page">
+    <div id="content" class="clearfix">
+        <div id="lcontent">
+        	{% block contentzone %}{%endblock%}
+        </div>
+        <div id="rcontent">
+        	<div id="rcontent-items">
+        		{%block rcontent %}{%endblock%}    			
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

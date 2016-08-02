@@ -1,0 +1,37 @@
+<span itemscope itemtype="http://schema.org/Article">
+<h3>
+{%if article.category %}
+<a id="article_title" itemprop='headline' class="cta1"  {{article.nofollow}} href="/community/{{article.category}}/{{article.ihref}}">{{article.title}}</a>
+{%else%}
+<a id="article_title" itemprop='headline' class="cta1" {{article.nofollow}} href="/article/detail/{{article.ihref}}">{{article.title}}</a>
+{%endif%}
+</h3>
+<div id="article_description" class="article_description" itemprop='description'>
+	{%if article.description %}{{article.description}}{%endif%}
+</div>
+<div class="article_meta" data-key='{{article.key}}'>
+	<div>
+	<a itemprop="url" class="article_url" {{article.nofollow}} href='{{article.href}}' id="article_url">{{article.href|slice:"128"}}{% if article.href|length > 128 %}...{% endif %}</a>
+	</div>
+	{%if article.key %}
+		<div class="controls" id='article_controls_{{article.key}}'>{ {%if article.approved == '1' %}approved{%endif%}{%if article.approved == '0' %}rejected{%endif%}{%if article.approved == None %}<a class="cta2 approve" id='approve_article_{{article.key}}' {{article.nofollow}} data-key="{{article.key}}"  >approve</a> | <a class="cta2 reject" id='reject_article_{{article.key}}' {{article.nofollow}} data-key="{{article.key}}">reject</a> {%endif%} }</div>
+	{%endif%}
+	{%if article.authors %}{{article.authors|join:", "}}{%endif%}
+	Submitted by 
+	{%if article.source == 'syytacit' %}
+		<a id="article_submitter" href="/user/home/syytacit">
+		<span itemprop="author">{{article.username}}</span></a>
+	{%else%}
+		<a id='article_submitter' {{article.nofollow}} href="/user/home/{{article.username}}">{{article.username}}</a>
+    {%endif%}
+	on <span itemprop="datePublished" content="{{article.updated|date:"Y-m-dTH:i"}}">{{article.updated|date:"l  M j, Y h:i a"}}</span> | <a {{article.nofollow}} href="{%if article.category%}/community/{{article.category}}/{%else%}/article/detail/{%endif%}{{article.ihref}}#comments" ><span id="article_numcomments_{{article.key}}" itemprop='commentCount'>{%if article.numcomments %}{{article.numcomments}}{%else%}0{%endif%} </span> comments</a> | <span id="article_numapprovals_{{article.key}}" itemprop='interactionCount' content="{{article.numapprovals}} approvals">{%if article.numapprovals %}{{article.numapprovals}}{%else%}0{%endif%}</span> approvals
+	<div class='article_meta_categories'>
+	{% if article.tags %}
+		<span class='article_tags'>{%for tag in article.tags %}<a itemprop="about" content="{{tag}}" {{article.nofollow}} href="/community/{{tag}}">{{tag}}</a> | {%endfor%}</span>
+	{%endif%}
+	</div>
+</div>
+</span>
+{%with question=article.question %}
+{%include "module/question/view/question_asker.html" %}
+{%endwith%}

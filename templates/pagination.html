@@ -1,0 +1,20 @@
+{% if model.pagination %}
+<div class="pagination">
+{% if model.pagination.previous %}
+<a class="cta-pagination" href="{{model.pagination.url}}{{model.pagination.previous}}">«Previous</a>
+{%endif%}
+{% if model.pagination.range%}
+	{% for page in model.pagination.range%}
+	{% ifequal page model.pagination.page %}
+<span style="font-weight: bold">{{page}}</span>
+{%else%}
+<a href="{{model.pagination.url}}{{page}}">{{page}}</a>
+{%endifequal%}
+
+	{%endfor%}
+{%endif%}
+{% if model.pagination.next %}
+<a class="cta-pagination" href="{{model.pagination.url}}{{model.pagination.next}}">Next »</a>
+{%endif%}
+</div>
+{%endif%}

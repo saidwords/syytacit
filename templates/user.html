@@ -1,0 +1,17 @@
+<div id="rtmenu" >
+	
+	<a id='btn-login' {% if model.user.username%}style="display:none;" {%endif%} class="cta3">Login |</a>  
+	<a id='btn-signup' {% if model.user.username %}style="display:none;" {%endif%}class="button cta3">Register</a>
+	<a id='btn-logout' {% if not model.user.username %}style="display:none;" {%endif%} class="cta3">Logout</a> 
+	<a id="user" {% if not model.user.username%}style="display:none;"{%endif%} href="/user/home/{{model.user.username}}" class="cta3">{{model.user.username}}</a>
+	 <br>
+	 <div id='login_message'></div>
+	 <span id='login-fields' style="display:none;">
+	  Username: <input type='text' id='username' name='user'><br>
+      Password:&nbsp; <input type="password" id='password'><br>
+      <span id='password2-field' style="display:none;">
+      	Retype Password:&nbsp; <input type="password" id='password2' >
+      </span>
+     </span>
+	 
+</div>

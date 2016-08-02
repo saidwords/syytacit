@@ -1,0 +1,39 @@
+{% extends "BaseLayoutView.html" %}
+{%block localjavascript %}
+<script type="text/javascript" src="/module/question/view/js/webservice.js"></script>
+<script type="text/javascript" src="/module/question/view/js/browse.js"></script>
+<script>
+$(document).ready(function(){ 
+qb = new QuestionBrowser();
+qb.init();
+});
+</script>
+{% endblock %}
+
+{% block contentzone %}
+<div id='message'></message>
+
+{%for sentence in model.sentences%}
+<div class='sentence' data-key='{{sentence.key}}'>
+{% if sentence.status = 0 %}
+<textarea id='{{sentence.key}}' class='new_question' cols=132>{{sentence.sentence}}</textarea><br>
+<button class="question_not_possible">I can't make a good question out of this sentence</button><br>
+<a href='{{sentence.wiki.url}}'>{{sentence.wiki.url}}</a> ( {{sentence.wiki.key}} )<br>
+Categories:
+  {%for cat in sentence.categories%}
+  	<a href='/question/creator/{{cat.name}}/{{model.page}}'>{{cat.name}}</a> |
+  {%endfor%}
+
+{%else%}
+{{sentence.sentence}}<br>
+{%endif%}
+<br>
+</div>
+{%endfor%}
+
+{%for wiki in model.wikis%}
+<a href='/question/creator/{{model.category.name}}/{{model.page}}/{{wiki.title}}'>{{wiki.title}} </a><br>
+{%endfor%}
+
+<a href='/question/creator/{{model.category.name}}/{{model.prevpage}}/{{model.wikititle}}'>prev</a> | <a href='/question/creator/{{model.category.name}}/{{model.nextpage}}/{{model.wikititle}}'>next</a>
+{% endblock %}

@@ -1,0 +1,3 @@
+blacklist:
+- subnet: 110.83.60.237
+  description: fckeditor probes

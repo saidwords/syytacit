@@ -1,0 +1,12 @@
+{%if userstats %}
+<div class='user_stats'>
+<h1>{{title}}</h1>
+{%for entry in userstats %}
+<div class='user_stats_entry' title="{{entry.username}} score for {{entry.category.name}} is {{entry.pct}}">
+   <div class='user_stats_category'><a href="/community/{{ entry.category.name }}">{{ entry.category.name }}</a></div>
+   <div class='user_stats_username'><a href="/user/home/{{entry.username}}">{{ entry.username }}</a></div>
+   <div class='user_stats_score' style='width:{{ entry.pct|floatformat:0 }}%'>{{ entry.pct|floatformat:2 }}%</div>
+</div>
+{%endfor%}
+</div>
+{%endif%}

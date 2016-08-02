@@ -1,0 +1,40 @@
+{%extends "BaseLayoutView.html" %}
+{%block contentzone %}
+{%if model.articles %}
+	<div id="lcontent-items">       
+	<ul>
+	{%for article in model.articles %}
+	<li>
+		<div class="bracket">
+		{% with article=article %}
+			{%include "module/article/view/article_meta.html" %}
+		{% endwith %}
+		</div>
+	</li>
+	{%endfor%} 
+	</ul>
+	</div>
+{%else%}
+	There are no articles tagged with category "{{model.category_name}}"
+{%endif%}
+<br>
+{% endblock %}
+
+{%block rcontent %}
+{% with userstats=model.leaderboard title="{Top Users}" %}
+	{%include "user_knowledge_stats.html" %}
+{% endwith %}
+{%if model.user %}
+	{% with userstats=model.userstats title="{Your Scores}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+	{% with userstats=model.greater_userstats title="{Users Ahead of You}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+	{% with userstats=model.lesser_userstats title="{Users Behind You}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+{%endif%}
+{%include "ad.html" %}
+{%include "google_analytics.html" %}
+{%endblock%}

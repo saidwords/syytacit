@@ -1,0 +1,80 @@
+SYYTACIT_HOME=/Users/steve/Documents/workspace/syytacit
+APPENGINE_HOME=/usr/local/google_appengine
+
+if [ ! -d $SYYTACIT_HOME ]; then
+	echo "invalid directory $SYYTACIT_HOME"
+	exit 1
+fi
+if [ ! -d $APPENGINE_HOME ]; then
+	echo "invalid directory $APPENGINE_HOME"
+	exit 1
+fi
+
+if [ ! -f /opt/yuicompressor-2.4.8.jar ]; then
+	echo "yui compress is not installed!"
+	exit 1
+fi
+
+which java
+
+if [ "$?" != "0" ]; then
+	echo "java is not installed!"
+	exit 1
+fi
+
+
+# compress css javascript
+#backup existing js
+
+if [ -d "./tmp_backup" ]; then
+	rm -rf ./tmp_backup
+else
+	mkdir ./tmp_backup
+fi
+
+
+find $SYYTACIT_HOME/src/ -name "*.js" > all_javascript.txt
+find $SYYTACIT_HOME/src/ -name "*.css" > all_css.txt
+
+rsync -rv --include '*/' --include '*.js' --exclude '*' --prune-empty-dirs $SYYTACIT_HOME/src/ tmp_backup/
+rsync -rv --include '*/' --include '*.css' --exclude '*' --prune-empty-dirs $SYYTACIT_HOME/src/ tmp_backup/
+
+while read filename; do
+	echo $filename
+	java -jar /opt/yuicompressor-2.4.8.jar $filename > tmp.code
+	if [ "$?" != "0" ]; then
+		echo "Failed to compress $filename"
+		exit 1
+	fi
+	mv tmp.code $filename
+done < all_javascript.txt
+
+while read filename; do
+	echo $filename
+	java -jar /opt/yuicompressor-2.4.8.jar $filename > tmp.code
+	if [ "$?" != "0" ]; then
+		echo "Failed to compress $filename"
+		exit 1
+	fi
+	mv tmp.code $filename
+done < all_css.txt
+
+sed -e 's/application_environment="DEV"/application_environment="PROD"/' $SYYTACIT_HOME/src/main.py > /tmp/main.py
+mv /tmp/main.py $SYYTACIT_HOME/src/main.py
+
+echo "D3#f^gf50+p5"
+
+$APPENGINE_HOME/appcfg.py -e lexiconcept@gmail.com update $SYYTACIT_HOME/src/ 
+
+rsync -rv ./tmp_backup/. $SYYTACIT_HOME/src
+
+sed -e 's/application_environment="PROD"/application_environment="DEV"/' $SYYTACIT_HOME/src/main.py > /tmp/main.py
+mv /tmp/main.py $SYYTACIT_HOME/src/main.py
+
+date
+
+
+#  if Host appengine.google.com returned an invalid certificate then:
+#Quick workaround that I found: delete the file google_appengine/lib/cacerts/cacerts.txt from your installed SDK.
+#GoogleAppEngineLauncher/Contents/Resources/GoogleAppEngineDefault.bundle/Content‌​s/Resources/google_appengine/lib/ cacerts/cacerts.txt
+#EDIT # "as of google app engine SDK 1.8.1 this file as been renamed to urlfetch_cacerts.txt. Still in the same directory and removing it still fixes the problem."

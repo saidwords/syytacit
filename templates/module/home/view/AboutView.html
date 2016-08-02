@@ -1,0 +1,35 @@
+{% extends "BaseLayoutView.html" %}
+{%block localjavascript %}
+<script type="text/javascript" src="/module/question/view/js/question.js"></script>
+<script type="text/javascript" src="/module/home/view/js/home.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	hc = new HomeController();
+	hc.init();
+	hc.data.user.username={% if model.user.username%}'{{model.user.username}}'{%else%}false{%endif%};
+});
+</script>
+{% endblock %}
+{% block contentzone %}
+<div id="lcontent-items">
+<div style="margin: 10px 45px 0;">    	
+<p style="font-size:larger">Syytacit is a user curated content aggregator.</p>
+<ul>
+<li>
+The highest ranking content is determined by the most knowledgeable users, not the most popular.</li>
+<li>When a user makes a comment or approves an article, then the ranking of that comment or article is increased based on the users knowledge of subject area that the article is about</li>
+<li>How do we know how much a user knows about a subject? We ask them. Every article has a question form below it which contains a question related to the subject of the article.
+If the user answers this question correctly, then we know that he knows something about the subject and we grant him more ranking power in that subject area.</li>
+<li>What does the word "Syytacit" mean?<ul><li>"Syytacit" is a combination of the words "syytä" from the Finnish word for merit and "tacit" from "tacit knowledge"</li></ul>
+</ul>
+<p>
+If you have suggestions for improvement, then please contact us!
+<br>contact@syytacit.net
+</p>
+</div>
+</div>
+{% endblock %}
+{%block rcontent %}
+{%include "ad.html" %}
+{%include "google_analytics.html" %}
+{%endblock%}

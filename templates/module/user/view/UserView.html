@@ -1,0 +1,124 @@
+{% extends "BaseLayoutView.html" %}
+{%block localcss %}
+{%if model.section == 'comments' %}
+<link rel="stylesheet" href='/module/comments/view/css/comments.css' type="text/css" media="screen,projection" />
+{%endif%}
+<link rel="stylesheet" href='/module/article/view/css/article.css' type="text/css" media="screen,projection" />
+{% endblock %}
+
+{%block localjavascript %}
+<script type="text/javascript" src="/js/WebService.js"></script>
+<script type="text/javascript" src="/module/home/view/js/home.js"></script>
+<script type="text/javascript" src="/module/user/view/js/user.js"></script>
+
+{%if model.section == 'comments' %}
+<script type="text/javascript" src="/module/comments/view/js/comments.js"></script>
+{%endif%}
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	hc = new HomeController();
+	hc.init();
+	hc.data.user.username={% if model.user.username%}'{{model.user.username}}'{%else%}false{%endif%};
+	uc= new UserController();
+	uc.init();
+	{%if model.section == 'comments' %}
+		commentscontroller = Commentscontroller();
+	   	commentscontroller.data.user.username=hc.data.user.username;
+	   	commentscontroller.init();
+   	{%endif%}
+});
+</script>
+{% endblock %}
+{%block sidebar%}
+<img src='/img/adwords.png'>				
+{%endblock%}
+{% block contentzone %}
+{%if model.user1.username %}
+
+<h3>{{model.user1.username}} has been a member for {{model.user_date_elapsed}} since {{model.user_date_established|date:"l  M j, Y h:i a"}}</h3>
+{%if model.section == 'knowledge' %}
+Knowledge |
+{%else%}
+<a href="/user/home/{{model.user1.username}}/knowledge">Knowledge</a> |
+{%endif%}
+{%if model.section == 'articles' %}
+Articles ({{model.numarticles}}) |
+{%else%}
+<a href="/user/home/{{model.user1.username}}/articles">Articles</a> ({{model.numarticles}}) |
+{%endif%}
+{%if model.section == 'comments' %}
+Comments ({{model.numcomments}})
+{%else%}
+<a href="/user/home/{{model.user1.username}}/comments">Comments</a> ({{model.numcomments}})
+{%endif%}
+{% if model.user.username %}
+| <a href="/user/preferences/{{model.user1.username}}">preferences</a>
+{%endif%}
+
+{% if model.comments %}
+
+<div itemscope itemtype="http://schema.org/UserComments" id='comments'>
+{%for comment in model.comments %}
+	{%include "module/article/view/comment.html" %}
+{%endfor%}
+</div>
+
+{%endif%}
+{%if model.section == 'articles' %}
+	<div id="lcontent-items">        	
+	<ul>
+	{%if model.articles %}
+		
+		{%for article in model.articles %}
+		<li>
+			<div class="bracket">
+			{% with article=article %}
+				{%include "module/article/view/article_meta.html" %}
+			{% endwith %}
+			</div>
+		</li>
+		{%endfor%} 
+	
+	{%else%}
+		<li>the user has not submitted any articles</li>
+	{%endif%}
+	</ul>
+	</div>
+{%endif%}
+
+{%if model.userknowledge %}
+	{% with userstats=model.userknowledge title="" %}
+			{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+{%endif%}
+
+<br>
+{%if model.prevpage %}
+<a href="/user/home/{{model.user1.username}}/{{model.section}}/{{model.prevpage}}">Previous</a>
+{%endif%}
+{%if model.nextpage %}
+<a href="/user/home/{{model.user1.username}}/{{model.section}}/{{model.nextpage}}">Next</a>
+{%endif%}
+
+{%else%}
+User does not exist
+{%endif%}
+
+{% endblock %}
+{%block rcontent %}
+{% with userstats=model.leaderboard title="{Top Users}" %}
+	{%include "user_knowledge_stats.html" %}
+{% endwith %}
+{%if model.user1.username %}
+	{% with userstats=model.greater_userstats title="{Users Ahead of {{model.user1.username}}}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+	{% with userstats=model.lesser_userstats title="{Users Behind {{model.user1.username}}}" %}
+		{%include "user_knowledge_stats.html" %}
+	{% endwith %}
+{%endif%}
+{%include "ad.html" %}
+{%include "google_analytics.html" %}
+{%endblock%}

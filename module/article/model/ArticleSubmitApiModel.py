@@ -1,0 +1,2 @@
+class ArticleSubmitApiModel:
+    article=None

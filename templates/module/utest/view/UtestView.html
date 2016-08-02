@@ -1,0 +1,40 @@
+{% extends "BaseLayoutView.html" %}
+{% block contentzone %}
+<form class='form' method='POST' action='/utest/index/'>
+<button type='submit'>Run</button>
+<ul>
+	{% for test in model.tests %}
+	<li><span onClick='javascript:toggle("{{test.className}}");'>{{test.className}}</span>
+		<ul id='{{test.className}}' {% if test.hide %} style='display:none' {% endif %}>
+			{%for testCase in test.cases %}
+			<li><input type='checkbox' name='methods' value='{{test.className}}.{{testCase}}'>{{testCase}}</li>
+			{%endfor%}
+		</ul>
+	</li>
+	{%endfor%}
+</ul>
+<button type='submit'>Run</button>
+</form>
+<br>
+{{model.status|escape}}<br><br>
+failures<br>
+<ul>
+{% for fail in model.failures %}
+	<li>{{fail}}</li>
+{% endfor %}
+</ul>
+<br>
+errors<BR>
+<ul>
+{% for err in model.errors %}
+	<li>{{err}}</li>
+{% endfor %}
+</ul>
+
+<script language='javascript'>
+function toggle(elementId){
+	var foo=$("#"+elementId);
+	foo.toggle();
+}
+</script>
+{% endblock %}

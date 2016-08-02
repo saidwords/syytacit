@@ -1,0 +1,41 @@
+cron:
+
+- description: get latest news from the UsaToday Webservice
+  url: /json/cron/acquire_latest_usatoday_headlines
+  schedule: every day 17:00
+
+- description: mark old articles as archived
+  url: /json/cron/archive_articles
+  schedule: every 1 hours
+  
+- description: acquire wiki pages
+  url: /json/cron/acquire_wiki_pages
+  schedule: every day 00:20
+
+- description: acquire wiki sentences
+  url: /json/cron/acquire_sentences
+  schedule: every day 00:30
+
+- description: get latest news from the UsaToday Webservice
+  url: /json/cron/acquire_latest_usatoday_headlines
+  schedule: every day 17:00
+  
+- description: get results from turk for questions
+  url: /json/cron/get_fibquestion_hits
+  schedule: every day 03:00
+
+- description: have turk create questions
+  url: /json/cron/turk_creates_fibquestion
+  schedule: every day 02:00
+  
+- description: mark old articles as archived
+  url: /json/cron/archive_articles
+  schedule: every 1 hours
+
+- description: remove approved HITS from mechanical turk
+  url: /json/cron/remove_old_approved_hits
+  schedule: every day 06:00
+
+- description: try to find the associated wiki category for all opencalais categories
+  url: /json/cron/map_categories_to_wiki
+  schedule: every day 00:10

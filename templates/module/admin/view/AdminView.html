@@ -1,0 +1,8 @@
+{% extends "BaseLayoutView.html" %}
+{%block sidebar%}
+<img src='/img/adwords.png'>				
+{%endblock%}
+{% block contentzone %}
+<a href="/associatedpress/acquire_latest_headlines">load articles from AP webservice</a><br>
+This is the admin view. Todays date is {{model.todaydate}}
+{% endblock %}

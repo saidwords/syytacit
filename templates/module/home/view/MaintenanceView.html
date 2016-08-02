@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}Syytacit {%if model.page_subtitle%} - offline{%endif%}{% endblock %}</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta property="og:site_name" content="syytacit" />
+<meta property="og:image" content="http://www.syytacit.net/img/logo.png" />
+<meta property="og:type" content="{% block meta-og-type %}website{% endblock %}" />
+<meta property="og:url" content="www.syytacit.net"/>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href='/css/view.css' type="text/css" media="screen,projection" />
+</head>
+<body>
+<div id="header">
+    <div id='header_left'>
+		<span id='title'>SYYTACIT</span><span>(offline)</span>
+		<span id='description'></span>
+	</div>
+	<div id='header_right'>
+	</div>
+    <div class="clearfix"></div>
+</div>
+<div id="page">
+    <div id="content" class="clearfix">
+        <div id="lcontent">
+        	{% block contentzone %}
+        	<div>
+        	Syytacit is currently offline
+			{% if model.message %}
+			<p>{{model.message}}</p>
+			{%endif%}
+			{%if model.eta %}
+			<p>We expect to be back online in {{model.eta}} from now</p>
+			{%endif%}
+			<div>   	
+        	{%endblock%}
+        </div>
+        <div id="rcontent">
+        	<div id="rcontent-items">
+        		{%block rcontent %}{%endblock%}    			
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

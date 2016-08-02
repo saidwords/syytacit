@@ -1,0 +1,3 @@
+class GetSentencesViewModel:
+    sentences=[]
+    url=""

@@ -1,0 +1,2 @@
+class GetQuestionViewModel():
+    question=None

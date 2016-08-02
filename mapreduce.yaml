@@ -1,0 +1,8 @@
+mapreduce:
+- name: gravity
+  mapper:
+    input_reader: mapreduce.input_readers.DatastoreInputReader
+    handler: common.lib.MapReduce.calculategravity
+    params:
+    - name: entity_kind
+      default: module.article.model.ArticleModel.ArticleModel

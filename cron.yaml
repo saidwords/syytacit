@@ -1,0 +1,32 @@
+cron:
+##- description: get latest news from the UsaToday Webservice
+##  url: /json/cron/acquire_latest_usatoday_headlines
+##  schedule: every day 00:00
+  
+##- description: try to find the associated wiki category for all opencalais categories
+##  url: /json/cron/map_categories_to_wiki
+##  schedule: every day 00:10
+  
+##- description: acquire wiki pages
+##  url: /json/cron/acquire_wiki_pages
+##  schedule: every day 00:20
+
+##- description: acquire wiki sentences
+##  url: /json/cron/acquire_sentences
+##  schedule: every day 00:30
+
+- description: rank and sort articles
+  url: /json/cron/sort_articles
+  schedule: every 5 minutes
+  
+- description: flush memcache counters to DB
+  url: /json/cron/flush_article_memcache_to_db
+  schedule: every 1 hours
+  
+- description: acquire headlines from various RSS feeds
+  url: /json/cron/acquire_rss_articles
+  schedule: every 1 hours 
+
+- description: send myself an activity report
+  url: /json/cron/generate_report
+  schedule: every day 00:30

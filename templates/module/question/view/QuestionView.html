@@ -1,0 +1,26 @@
+{% extends "BaseLayoutView.html" %}
+{%block sidebar%}		
+{%endblock%}
+{% block contentzone %}
+{% for question in model.questions %}
+  {%for cat in question.wikicats%}
+  	{{cat.name}}
+  {%endfor%}
+  Q:<textarea id='question-{{question.key}}' cols="80">{{question.question}}</textarea><br>
+  A:
+  {%if question.correct_answer %}
+  	<textarea id='answer-{{question.correct_answer.key}}' cols=80 >{{question.correct_answer.answer}}</textarea><br>
+  {%endif%}
+  {%if question.wranswers %}
+	{%for answer in question.wranswers%}
+  		{{forloop.counter}}. <textarea id='answer-{{answer.key}}' cols=80 >{{answer.answer}}</textarea><br>
+  	{%endfor%}
+  {%endif%}
+  <hr>
+{%endfor%}
+<hr>
+
+catgory question
+correct_answer
+wrong answers
+{% endblock %}

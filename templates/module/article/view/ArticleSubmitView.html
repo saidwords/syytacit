@@ -1,0 +1,52 @@
+{% extends "BaseLayoutView.html" %}
+{%block localcss %}
+<link rel="stylesheet" href='/module/article/view/css/submit.css' type="text/css" media="screen,projection" />
+{% endblock %}
+{%block localjavascript %}
+<script type="text/javascript" src="/module/article/view/js/articlesubmit.js"></script>
+<script type="text/javascript">
+var controller=null;
+$(document).ready(function(){
+	asc=new ArticleSubmitController();
+    asc.data.user.username={% if model.user.username%}'{{model.user.username}}'{%else%}false{%endif%};
+    asc.init();
+});
+</script>
+{% endblock %}
+{%include "navigation.html" %}
+{%block sidebar%}
+{%endblock%}
+{% block contentzone %}
+{% with article=model.article %}
+	{%include "module/article/view/article_meta.html" %}
+{% endwith %}
+<hr>
+
+<div class="article-form">
+<input type='radio' name='post_target' class='post_target' value='community' id='post_target_community' {%if model.article.category != None %}checked='true'{%endif%}>
+{%if model.article.category == None %}
+Post text to a Community
+{%else%}
+Post text to the {{model.article.category}} Community
+{%endif%}
+</a>
+    <input type='radio' name='post_target' class='post_target' value='url' id='post_target_url' {%if model.article.category == None %}checked='true'{%endif%}>Post a URL</a><br>
+    <div id='new_article_url_container' {%if model.article.category != None%}style='display:None'{%endif%}>
+    	Url: <input type="text" placeholder="URL" id="new_article_url" />
+    </div>
+    <div id='community_container'>
+    	Community: <input type="text" id="community" value="{%if model.article.category != None %}{{model.article.category}}{%endif%}"/>
+    </div>
+    Title: <input type="text" placeholder="Title" id="new_article_title" /><br>
+    Original Title: <span id="original_article_title"></span>
+    <br>
+	Description: <textarea placeholder="Description" id="new_article_description"></textarea>
+	Original Description:<span id="original_article_description"></span><br>
+    <button id="btn_submit_article" rel='nofollow'>&nbsp;&nbsp;Submit</button>
+    <span id='message'></span>
+</div>
+{% endblock %}
+{%block rcontent %}
+{%include "ad.html" %}
+{%include "google_analytics.html" %}
+{%endblock%}

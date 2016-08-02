@@ -1,0 +1,9 @@
+{% extends "BaseLayoutView.html" %}
+{%block sidebar%}
+<img src='/img/adwords.png'>				
+{%endblock%}
+{% block contentzone %}
+This is the example view. Todays date is {{model.todaydate}}
+<br>
+message: {{model.message}}<br>
+{% endblock %}
